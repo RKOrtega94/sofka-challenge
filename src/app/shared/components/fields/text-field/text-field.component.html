@@ -1,0 +1,30 @@
+<label class="text-sm font-medium text-gray-700 dark:text-gray-200">
+  @if(label()) {
+  {{ label() }}
+  } @else {
+  <ng-content></ng-content>
+  }
+</label>
+<div class="relative mb-6">
+  <div
+    #prefixicon
+    class="absolute inset-y-0 start-0 flex items-center pointer-events-none w-8 justify-center text-gray-500 dark:text-gray-400"
+  >
+    <ng-content select="[prefixicon]"></ng-content>
+  </div>
+  @if(type() === 'password') {
+  <div
+    class="absolute inset-y-0 end-0 flex items-center pointer-events-none w-8 justify-center text-gray-500 dark:text-gray-400"
+  >
+    suffixicon
+  </div>
+  }
+  <input
+    type="text"
+    [formControl]="control()"
+    id="input-group-1"
+    class="w-full border border-gray-300 dark:border-gray-700 rounded-lg ps-3 py-2 text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+    [ngClass]="{ 'pl-8': hasPrefix() }"
+    placeholder="name@flowbite.com"
+  />
+</div>

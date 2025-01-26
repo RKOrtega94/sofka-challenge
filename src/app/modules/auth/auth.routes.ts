@@ -13,6 +13,11 @@ export const authRoutes: Routes = [
         path: 'login',
         component: LoginPageComponent,
       },
+      {
+        path: '**',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
     ],
   },
 ];

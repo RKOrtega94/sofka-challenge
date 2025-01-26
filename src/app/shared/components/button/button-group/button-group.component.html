@@ -1,0 +1,14 @@
+<div class="w-full flex rounded-lg overflow-hidden h-12">
+  @for (item of options(); track $index) {
+  <button
+    class="w-full text-center px-4 font-semibold capitalize cursor-pointer"
+    [ngClass]="{
+      'bg-blue-500 text-white': item === selected(),
+      'bg-gray-200 text-gray-700': item !== selected()
+    }"
+    (click)="toggleOption(item)"
+  >
+    {{ item }}
+  </button>
+  }
+</div>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ResponseInterface } from '../interfaces/response.interface';
 
 /**
@@ -32,11 +33,22 @@ export class ApiService {
       params?: HttpParams | { [param: string]: string | string[] };
       requiresToken?: boolean;
     }
-  ): Observable<ResponseInterface<T>> {
-    return this.#client.get<ResponseInterface<T>>(path, {
-      headers: this.#getHeaders(requiresToken, headers),
-      params,
-    });
+  ): Observable<T> {
+    return this.#client
+      .get<ResponseInterface<T>>(path, {
+        headers: this.#getHeaders(requiresToken, headers),
+        params,
+      })
+      .pipe(
+        map((response: ResponseInterface<T>) => {
+          if (response.data) {
+            return response.data;
+          } else {
+            throw new Error('Error retrieving data');
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   /**
@@ -58,10 +70,21 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<ResponseInterface<T>> {
-    return this.#client.post<ResponseInterface<T>>(path, body, {
-      headers: this.#getHeaders(requiresToken, headers),
-    });
+  ): Observable<T> {
+    return this.#client
+      .post<ResponseInterface<T>>(path, body, {
+        headers: this.#getHeaders(requiresToken, headers),
+      })
+      .pipe(
+        map((response: ResponseInterface<T>) => {
+          if (response.data) {
+            return response.data;
+          } else {
+            throw new Error('Error retrieving data');
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   /**
@@ -83,10 +106,21 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<ResponseInterface<T>> {
-    return this.#client.put<ResponseInterface<T>>(path, body, {
-      headers: this.#getHeaders(requiresToken, headers),
-    });
+  ): Observable<T> {
+    return this.#client
+      .put<ResponseInterface<T>>(path, body, {
+        headers: this.#getHeaders(requiresToken, headers),
+      })
+      .pipe(
+        map((response: ResponseInterface<T>) => {
+          if (response.data) {
+            return response.data;
+          } else {
+            throw new Error('Error retrieving data');
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
   /**
@@ -106,10 +140,12 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<ResponseInterface<null>> {
-    return this.#client.delete<ResponseInterface<null>>(path, {
-      headers: this.#getHeaders(requiresToken, headers),
-    });
+  ): Observable<any> {
+    return this.#client
+      .delete<ResponseInterface<null>>(path, {
+        headers: this.#getHeaders(requiresToken, headers),
+      })
+      .pipe(catchError(this.handleError));
   }
 
   #getHeaders(requiresToken: boolean, headers?: HttpHeaders): HttpHeaders {
@@ -129,5 +165,15 @@ export class ApiService {
     }
 
     return newHeaders;
+  }
+
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
   }
 }

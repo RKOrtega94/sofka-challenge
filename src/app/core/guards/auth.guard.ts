@@ -3,6 +3,7 @@ import { Router, type CanActivateFn } from '@angular/router';
 import { UserService } from '@auth/presentation/service/user.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  console.log('authGuard');
   const service = inject(UserService);
   const router = inject(Router);
   const user = service.user();

@@ -44,23 +44,16 @@ export class UserService {
    * @returns Observable<UserModel>
    */
   retrieveUserByEmail(email: string) {
+    this.#state.update((state) => ({ ...state, loading: true }));
     return this.#retrieveUserByEmail.execute(email).subscribe({
       next: (user: UserModel) => {
-        this.#state.set({
-          ...this.#state(),
-          user,
-          loading: false,
-        });
+        this.#state.update((state) => ({ ...state, user, loading: false }));
         localStorage.setItem('user', JSON.stringify(user));
         this.#route.navigate(['/']);
       },
       error: (error: HttpErrorResponse) => {
+        this.#state.update((state) => ({ ...state, loading: false }));
         alert(error.error.message);
-        this.#state.set({
-          ...this.#state(),
-          user: null,
-          loading: false,
-        });
       },
     });
   }

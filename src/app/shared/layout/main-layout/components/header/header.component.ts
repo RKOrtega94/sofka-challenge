@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { UserService } from '@auth/presentation/service/user.service';
 import { ButtonModule } from '@components/button/button.module';
 
 @Component({
@@ -8,4 +9,10 @@ import { ButtonModule } from '@components/button/button.module';
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  #service = inject(UserService);
+
+  logout() {
+    this.#service.logout();
+  }
+}

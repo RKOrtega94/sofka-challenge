@@ -9,7 +9,23 @@ import { catchError, map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserSource extends ApiService {
+  /**
+   * Retrieve user by email
+   *
+   * @param email Email to retrieve the user
+   * @returns Observable<UserModel>
+   */
   retrieveUserByEmail(email: string): Observable<UserModel> {
     return this.get<UserModel>(`users/${email}`, { requiresToken: false });
+  }
+
+  /**
+   * Create user
+   *
+   * @param email Email to create the user
+   * @returns Observable<UserModel>
+   */
+  createUser(email: string): Observable<UserModel> {
+    return this.post<UserModel>(`users`, { email }, {});
   }
 }

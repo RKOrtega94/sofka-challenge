@@ -62,7 +62,7 @@ export class ApiService {
    */
   protected post<T>(
     path: string,
-    body: T,
+    body: any,
     {
       headers,
       requiresToken = true,
@@ -149,21 +149,27 @@ export class ApiService {
   }
 
   #getHeaders(requiresToken: boolean, headers?: HttpHeaders): HttpHeaders {
-    const newHeaders = new HttpHeaders({});
+    let newHeaders = new HttpHeaders();
+
     if (requiresToken) {
-      if (localStorage.getItem('user') === null) {
+      const user = localStorage.getItem('user');
+      if (!user) {
         throw new Error('Token not found');
       }
-      const token = JSON.parse(localStorage.getItem('user')!).token;
-      newHeaders.append('user_id', token);
+
+      const token = JSON.parse(user).id;
+      console.log(token);
+      newHeaders = newHeaders.append('user_id', token);
     }
 
     if (headers) {
       headers.keys().forEach((key) => {
-        newHeaders.append(key, headers.get(key)!);
+        const value = headers.get(key)!;
+        newHeaders = newHeaders.append(key, value);
       });
     }
 
+    console.log(newHeaders);
     return newHeaders;
   }
 
@@ -174,6 +180,6 @@ export class ApiService {
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
 }

@@ -7,4 +7,5 @@ import { Injectable } from '@angular/core';
 })
 export abstract class UserRepository {
   abstract retrieveUserByEmail(email: string): Observable<UserModel>;
+  abstract createUser(email: string): Observable<UserModel>;
 }

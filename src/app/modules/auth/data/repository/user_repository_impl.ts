@@ -10,7 +10,23 @@ import { UserSource } from '../source/user_source';
 export class UserRepositoryImpl implements UserRepository {
   #source = inject(UserSource);
 
+  /**
+   * Retrieve user by email
+   *
+   * @param email Email to retrieve the user
+   * @returns Observable<UserModel>
+   */
   retrieveUserByEmail(email: string): Observable<UserModel> {
     return this.#source.retrieveUserByEmail(email);
+  }
+
+  /**
+   * Create user
+   *
+   * @param email Email to create the user
+   * @returns Observable<UserModel>
+   */
+  createUser(email: string): Observable<UserModel> {
+    return this.#source.createUser(email);
   }
 }

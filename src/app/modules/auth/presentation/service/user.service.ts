@@ -1,10 +1,11 @@
-import { Observable } from 'rxjs';
 import { RetrieveUserByEmailUseCase } from './../../application/use_cases/retrieve_user_by_email_use_case';
-import { Injectable, OnInit, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { UserModel } from '@auth/application/model/user.model';
-import { ResponseInterface } from 'src/app/core/interfaces/response.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CreateUserUseCase } from '@auth/application/use_cases/create_user_use_case';
+import { DialogService } from '@components/dialog/dialog.service';
+import { CreateUserModalComponent } from '../components/create-user-modal/create-user-modal.component';
 
 interface UserState {
   user: UserModel | null;
@@ -20,7 +21,9 @@ const initialState: UserState = {
   providedIn: 'root',
 })
 export class UserService {
+  #dialogService = inject(DialogService);
   #retrieveUserByEmail = inject(RetrieveUserByEmailUseCase);
+  #createUser = inject(CreateUserUseCase);
 
   #route = inject(Router);
   #state = signal<UserState>(initialState);
@@ -53,8 +56,39 @@ export class UserService {
       },
       error: (error: HttpErrorResponse) => {
         this.#state.update((state) => ({ ...state, loading: false }));
-        alert(error.error.message);
+        this.#dialogService.showDialog(CreateUserModalComponent);
       },
     });
+  }
+
+  /**
+   * Create user
+   *
+   * @param email Email to create the user
+   * @returns Observable<UserModel>
+   */
+  createUser(email: string) {
+    this.#state.update((state) => ({ ...state, loading: true }));
+    return this.#createUser.execute(email).subscribe({
+      next: (user: UserModel) => {
+        this.#state.update((state) => ({ ...state, user, loading: false }));
+        localStorage.setItem('user', JSON.stringify(user));
+        this.#route.navigate(['/']);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.#state.update((state) => ({ ...state, loading: false }));
+        console.error(error);
+      },
+    });
+  }
+
+  /**
+   * Logout the user
+   */
+  logout() {
+    localStorage.removeItem('user');
+    this.#state.update((state) => ({ ...state, user: null }));
+    localStorage.removeItem('user');
+    this.#route.navigate(['/auth']);
   }
 }

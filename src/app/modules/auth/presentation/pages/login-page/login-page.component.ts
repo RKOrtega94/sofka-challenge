@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '@auth/presentation/service/user.service';
 import { ButtonModule } from '@components/button/button.module';
 import { TextFieldComponent } from '@components/fields/text-field/text-field.component';
 import { AppFormBuilder } from 'src/app/core/helpers/form-builder';
@@ -11,6 +12,8 @@ import { AppFormBuilder } from 'src/app/core/helpers/form-builder';
   styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
+  #service = inject(UserService);
+
   emailCcontroller = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -19,4 +22,10 @@ export class LoginPageComponent {
   formGroup = new AppFormBuilder({
     email: this.emailCcontroller,
   }).build();
+
+  login($event: Event) {
+    $event.preventDefault();
+    if (this.formGroup.invalid) return;
+    this.#service.retrieveUserByEmail(this.emailCcontroller.value!);
+  }
 }

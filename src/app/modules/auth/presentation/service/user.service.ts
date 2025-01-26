@@ -44,6 +44,7 @@ export class UserService implements OnInit {
         localStorage.setItem('user', JSON.stringify(user));
       },
       error: (error: HttpErrorResponse) => {
+        alert(error.error.message);
         this.#state.set({
           ...this.#state(),
           user: null,

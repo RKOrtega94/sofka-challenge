@@ -10,7 +10,7 @@ import { catchError, map, Observable } from 'rxjs';
 })
 export class UserSource extends ApiService {
   retrieveUserByEmail(email: string): Observable<UserModel> {
-    return this.get<UserModel>(`users/${email}`, {}).pipe(
+    return this.get<UserModel>(`users/${email}`, { requiresToken: false }).pipe(
       map((response: ResponseInterface<UserModel>) => {
         if (response.status === 200) {
           return response.data;

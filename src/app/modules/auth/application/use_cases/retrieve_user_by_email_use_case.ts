@@ -2,12 +2,17 @@ import { ResponseInterface } from './../../../../core/interfaces/response.interf
 import { Observable } from 'rxjs';
 import { UserModel } from '../model/user.model';
 import { UserRepository } from '../repository/user_repository';
+import { inject, Injectable } from '@angular/core';
+import { UserRepositoryImpl } from '@auth/data/repository/user_repository_impl';
 
 /**
  * RetrieveUserByEmailUseCase
  */
+@Injectable({
+  providedIn: 'root',
+})
 export class RetrieveUserByEmailUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  #repository: UserRepository = inject(UserRepositoryImpl);
 
   /**
    * Execute the use case
@@ -16,6 +21,6 @@ export class RetrieveUserByEmailUseCase {
    * @returns Observable<UserModel>
    */
   execute(email: string): Observable<UserModel> {
-    return this.userRepository.retrieveUserByEmail(email);
+    return this.#repository.retrieveUserByEmail(email);
   }
 }

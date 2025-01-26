@@ -1,4 +1,2 @@
 @import "tailwindcss";
-
-@theme {
-}
+@import "@angular/cdk/overlay-prebuilt.css";

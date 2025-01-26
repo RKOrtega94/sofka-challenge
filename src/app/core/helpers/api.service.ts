@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ResponseInterface } from '../interfaces/response.interface';
 
 /**
  * ApiService
@@ -31,8 +32,8 @@ export class ApiService {
       params?: HttpParams | { [param: string]: string | string[] };
       requiresToken?: boolean;
     }
-  ): Observable<T> {
-    return this.#client.get<T>(path, {
+  ): Observable<ResponseInterface<T>> {
+    return this.#client.get<ResponseInterface<T>>(path, {
       headers: this.#getHeaders(requiresToken, headers),
       params,
     });
@@ -57,8 +58,8 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<T> {
-    return this.#client.post<T>(path, body, {
+  ): Observable<ResponseInterface<T>> {
+    return this.#client.post<ResponseInterface<T>>(path, body, {
       headers: this.#getHeaders(requiresToken, headers),
     });
   }
@@ -82,8 +83,8 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<T> {
-    return this.#client.put<T>(path, body, {
+  ): Observable<ResponseInterface<T>> {
+    return this.#client.put<ResponseInterface<T>>(path, body, {
       headers: this.#getHeaders(requiresToken, headers),
     });
   }
@@ -96,7 +97,7 @@ export class ApiService {
    * @param requiresToken If the request requires a token or not (default: true)
    * @returns Observable<T>
    */
-  protected delete<T>(
+  protected delete(
     path: string,
     {
       headers,
@@ -105,8 +106,8 @@ export class ApiService {
       headers?: HttpHeaders;
       requiresToken?: boolean;
     }
-  ): Observable<T> {
-    return this.#client.delete<T>(path, {
+  ): Observable<ResponseInterface<null>> {
+    return this.#client.delete<ResponseInterface<null>>(path, {
       headers: this.#getHeaders(requiresToken, headers),
     });
   }

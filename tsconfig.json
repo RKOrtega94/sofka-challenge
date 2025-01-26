@@ -18,7 +18,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "baseUrl": "./",
-    "paths": {}
+    "paths": {
+      "@helpers/*": ["src/app/core/helpers/*"],
+      "@components/*": ["src/app/shared/components/*"],
+      "@auth/*": ["src/app/modules/auth/*"],
+      "@task/*": ["src/app/modules/task/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

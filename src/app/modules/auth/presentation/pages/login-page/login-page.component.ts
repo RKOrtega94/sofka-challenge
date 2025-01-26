@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { TextFieldComponent } from 'src/app/shared/components/fields/text-field/text-field.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ButtonModule } from '@components/button/button.module';
+import { TextFieldComponent } from '@components/fields/text-field/text-field.component';
 import { AppFormBuilder } from 'src/app/core/helpers/form-builder';
-import { ButtonModule } from 'src/app/shared/components/button/button.module';
 
 @Component({
   selector: 'app-login-page',

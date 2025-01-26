@@ -19,13 +19,23 @@ const initialState: UserState = {
 @Injectable({
   providedIn: 'root',
 })
-export class UserService implements OnInit {
+export class UserService {
   #retrieveUserByEmail = inject(RetrieveUserByEmailUseCase);
 
   #route = inject(Router);
   #state = signal<UserState>(initialState);
   user = computed(() => this.#state().user);
   loading = computed(() => this.#state().loading);
+
+  constructor() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.#state.set({
+        ...this.#state(),
+        user: JSON.parse(user),
+      });
+    }
+  }
 
   /**
    * Retrieve user by email
@@ -42,6 +52,7 @@ export class UserService implements OnInit {
           loading: false,
         });
         localStorage.setItem('user', JSON.stringify(user));
+        this.#route.navigate(['/']);
       },
       error: (error: HttpErrorResponse) => {
         alert(error.error.message);
@@ -51,15 +62,6 @@ export class UserService implements OnInit {
           loading: false,
         });
       },
-    });
-  }
-
-  ngOnInit(): void {
-    const userData = localStorage.getItem('user');
-    if (!userData) return;
-    this.#state.set({
-      ...this.#state(),
-      user: JSON.parse(userData),
     });
   }
 }

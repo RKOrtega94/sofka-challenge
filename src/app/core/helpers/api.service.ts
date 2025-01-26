@@ -115,10 +115,11 @@ export class ApiService {
   #getHeaders(requiresToken: boolean, headers?: HttpHeaders): HttpHeaders {
     const newHeaders = new HttpHeaders({});
     if (requiresToken) {
-      if (localStorage.getItem('token') === null) {
+      if (localStorage.getItem('user') === null) {
         throw new Error('Token not found');
       }
-      newHeaders.append('user_id', localStorage.getItem('token')!);
+      const token = JSON.parse(localStorage.getItem('user')!).token;
+      newHeaders.append('user_id', token);
     }
 
     if (headers) {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '@auth/presentation/service/user.service';
 import { ButtonModule } from '@components/button/button.module';
@@ -13,6 +13,8 @@ import { AppFormBuilder } from 'src/app/core/helpers/form-builder';
 })
 export class LoginPageComponent {
   #service = inject(UserService);
+
+  loading = computed(() => this.#service.loading());
 
   emailCcontroller = new FormControl('', [
     Validators.required,

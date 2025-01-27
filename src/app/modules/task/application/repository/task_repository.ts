@@ -7,4 +7,7 @@ import { Observable } from 'rxjs';
 })
 export abstract class TaskRepository {
   abstract retrieveTasks(): Observable<TaskModel[]>;
+  abstract createTask(task: TaskModel): Observable<TaskModel>;
+  abstract deleteTask(id: string): Observable<any>;
+  abstract updateTask(task: TaskModel): Observable<TaskModel>;
 }

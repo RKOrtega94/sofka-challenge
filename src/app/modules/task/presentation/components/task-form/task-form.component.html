@@ -1,0 +1,24 @@
+<dialog
+  open
+  class="container mx-auto max-w-md bg-white p-4 rounded-lg shadow-lg dark:bg-gray-800 my-auto h-auto"
+>
+  <h5 class="text-2xl font-semibold">
+    @if (editing) { Edit task } @else { Add task }
+  </h5>
+  <form [formGroup]="formGroup" (submit)="handleSave($event)">
+    <text-field
+      [control]="titleController"
+      label="Title"
+      placeholder="Task title"
+    />
+    <text-field
+      [control]="descriptionController"
+      label="Description"
+      placeholder="Task description"
+    />
+    <button class="w-full flex items-center justify-center gap-4" primary>
+      <span class="material-symbols-outlined"> add_circle </span>
+      @if (editing) { Update task } @else { Add task }
+    </button>
+  </form>
+</dialog>

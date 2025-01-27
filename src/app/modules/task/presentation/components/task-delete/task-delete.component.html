@@ -1,0 +1,16 @@
+<dialog
+  open
+  class="gap-4 flex flex-col container mx-auto max-w-md bg-white p-4 rounded-lg shadow-lg dark:bg-gray-800 my-auto h-auto"
+>
+  <p>
+    Are you sure you want to delete the task
+    <span class="font-semibold">
+      {{ task.title }}
+    </span>
+    ?
+  </p>
+  <footer class="flex w-full gap-2">
+    <button secondary class="w-full" (click)="cancel()">Cancel</button>
+    <button primary class="w-full" (click)="delete()">Delete</button>
+  </footer>
+</dialog>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-empty',
@@ -7,4 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './empty.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyComponent { }
+export class EmptyComponent {
+  title = input<string>('No data available');
+  subtitle = input<string | undefined>();
+}

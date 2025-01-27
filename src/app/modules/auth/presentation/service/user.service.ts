@@ -54,9 +54,15 @@ export class UserService {
         localStorage.setItem('user', JSON.stringify(user));
         this.#route.navigate(['/']);
       },
-      error: (error: HttpErrorResponse) => {
+      error: (error: string) => {
+        if (error.includes('404')) {
+          this.#dialogService.showDialog(CreateUserModalComponent, {
+            data: { email },
+          });
+        } else {
+          alert(error);
+        }
         this.#state.update((state) => ({ ...state, loading: false }));
-        this.#dialogService.showDialog(CreateUserModalComponent);
       },
     });
   }
@@ -73,6 +79,7 @@ export class UserService {
       next: (user: UserModel) => {
         this.#state.update((state) => ({ ...state, user, loading: false }));
         localStorage.setItem('user', JSON.stringify(user));
+        alert('User created successfully');
         this.#route.navigate(['/']);
       },
       error: (error: HttpErrorResponse) => {

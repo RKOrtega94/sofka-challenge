@@ -47,7 +47,7 @@ export class ApiService {
             throw new Error('Error retrieving data');
           }
         }),
-        catchError(this.handleError)
+        catchError(this.#handleError)
       );
   }
 
@@ -83,7 +83,7 @@ export class ApiService {
             throw new Error('Error retrieving data');
           }
         }),
-        catchError(this.handleError)
+        catchError(this.#handleError)
       );
   }
 
@@ -119,7 +119,7 @@ export class ApiService {
             throw new Error('Error retrieving data');
           }
         }),
-        catchError(this.handleError)
+        catchError(this.#handleError)
       );
   }
 
@@ -145,35 +145,29 @@ export class ApiService {
       .delete<ResponseInterface<null>>(path, {
         headers: this.#getHeaders(requiresToken, headers),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.#handleError));
   }
 
   #getHeaders(requiresToken: boolean, headers?: HttpHeaders): HttpHeaders {
     let newHeaders = new HttpHeaders();
-
     if (requiresToken) {
       const user = localStorage.getItem('user');
       if (!user) {
         throw new Error('Token not found');
       }
-
       const token = JSON.parse(user).id;
-      console.log(token);
       newHeaders = newHeaders.append('user_id', token);
     }
-
     if (headers) {
       headers.keys().forEach((key) => {
         const value = headers.get(key)!;
         newHeaders = newHeaders.append(key, value);
       });
     }
-
-    console.log(newHeaders);
     return newHeaders;
   }
 
-  private handleError(error: any): Observable<never> {
+  #handleError(error: any): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;

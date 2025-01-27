@@ -25,6 +25,6 @@
     id="input-group-1"
     class="w-full border border-gray-300 dark:border-gray-700 rounded-lg ps-3 py-2 text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
     [ngClass]="{ 'pl-8': hasPrefix() }"
-    placeholder="name@flowbite.com"
+    [placeholder]="placeholder()"
   />
 </div>

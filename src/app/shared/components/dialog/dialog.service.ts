@@ -4,7 +4,7 @@ import { ComponentType } from '@angular/cdk/portal';
 
 interface DialogConfig {
   id?: string;
-  disableClose: boolean;
+  disableClose?: boolean;
   data?: any;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
 }

@@ -1,33 +1,41 @@
 <div
-  class="w-full bg-white p-2 rounded-2xl flex justify-between items-center gap-4 px-4"
+  class="w-full flex gap-2 px-4 py-2 bg-white shadow-md rounded-lg items-center relative overflow-hidden"
 >
-  <input
-    type="checkbox"
-    class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 rounded"
-  />
-  <div class="flex-1 flex flex-col items-start justify-start">
-    <h6
-      class="text-lg font-semibold text-nowrap flex-nowrap flex items-baseline gap-4"
-    >
-      title
-      <span
-        class="text-sm font-light text-gray-500 dark:text-gray-400 flex items-center gap-1"
-      >
-        date
+  <div class="flex-1 flex gap-2 items-center">
+    <input
+      type="checkbox"
+      class="w-9 h-6"
+      (change)="handleToggleStatus()"
+      [checked]="task().status === 'completed'"
+    />
+    <div class="flex flex-col w-full">
+      <h6 class="text-lg font-semibold overflow-ellipsis">
+        {{ task().title }}
+      </h6>
+      <p>
+        {{ task().description }}
+      </p>
+      <span class="text-gray-500 dark:text-gray-400 text-sm">
+        {{ task().createdAt | date : "medium" }}
       </span>
-    </h6>
-    <p class="text-sm">description</p>
+    </div>
   </div>
-  <div class="flex rounded-2xl bg-gray-200 dark:bg-gray-700 overflow-hidden">
+  <div
+    class="absolute h-full right-0 flex gap-2 top-1/2 transform -translate-y-1/2 p-2 bg-white dark:bg-gray-800 items-center"
+  >
     <button
-      class="px-2 py-1 hover:bg-gray-300 mr-1 text-blue-700 dark:text-blue-400 cursor-pointer flex justify-center items-center"
+      class="flex items-center justify-center cursor-pointer"
+      (click)="handleUpdate()"
     >
       <span class="material-symbols-outlined"> edit </span>
     </button>
     <button
-      class="px-2 py-1 hover:bg-gray-300 mr-1 text-red-700 dark:text-red-400 cursor-pointer flex justify-center items-center"
+      class="flex items-center justify-center cursor-pointer"
+      (click)="handleDelete()"
     >
-      <span class="material-symbols-outlined"> delete </span>
+      <span class="material-symbols-outlined text-red-600 dark:text-red-400">
+        delete
+      </span>
     </button>
   </div>
 </div>

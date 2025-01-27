@@ -1,9 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseInterface } from './../../../../core/interfaces/response.interface';
 import { Injectable } from '@angular/core';
 import { UserModel } from '@auth/application/model/user.model';
 import { ApiService } from '@helpers/api.service';
-import { catchError, map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +24,6 @@ export class UserSource extends ApiService {
    * @returns Observable<UserModel>
    */
   createUser(email: string): Observable<UserModel> {
-    return this.post<UserModel>(`users`, { email }, {});
+    return this.post<UserModel>(`users`, { email }, { requiresToken: false });
   }
 }

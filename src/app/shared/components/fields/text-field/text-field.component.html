@@ -24,7 +24,17 @@
     [formControl]="control()"
     id="input-group-1"
     class="w-full border border-gray-300 dark:border-gray-700 rounded-lg ps-3 py-2 text-sm text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
-    [ngClass]="{ 'pl-8': hasPrefix() }"
+    [ngClass]="{
+      'pl-8': hasPrefix(),
+      'border-red-500': control().invalid && control().touched
+    }"
     [placeholder]="placeholder()"
   />
+  @if (control().invalid && control().touched) {
+  <div class="flex flex-col gap-0 text-xs text-red-600">
+    @for (item of getErrors(); track $index) {
+    <span>{{ item }}</span>
+    }
+  </div>
+  }
 </div>

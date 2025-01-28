@@ -27,7 +27,10 @@ export class LoginPageComponent {
 
   login($event: Event) {
     $event.preventDefault();
-    if (this.formGroup.invalid) return;
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+      return;
+    }
     this.#service.retrieveUserByEmail(this.emailCcontroller.value!);
   }
 }

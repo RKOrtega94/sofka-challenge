@@ -50,7 +50,7 @@ export class TaskFormComponent implements OnInit {
   handleSave($event: Event) {
     $event.preventDefault();
     if (this.formGroup.invalid) {
-      alert('Please fill all the fields');
+      this.formGroup.markAllAsTouched();
       return;
     }
     const task: TaskModel = {

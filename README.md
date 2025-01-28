@@ -1,59 +1,23 @@
 # SofkaChallenge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+## EN
 
-## Development server
+This project was development with Angulas 19.
 
-To start a local development server, run:
+Libraries used:
+- Angular CDK: I have used the `Angular CDK` library to create the Dialogs component with less code implementation.
+- Tailwind CSS V4: I have used the `Tailwind CSS` library to style the components with less code implementation.
 
-```bash
-ng serve
-```
+Architecture:
+- The project is divided into modules, each module has its own routing and components.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ES
 
-## Code scaffolding
+Este proyecto fue desarrollado con Angular 19.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Librerías utilizadas:
+- Angular CDK: He utilizado la librería `Angular CDK` para crear el componente Dialogs con menos implementación de código.
+- Tailwind CSS V4: He utilizado la librería `Tailwind CSS` para estilizar los componentes con menos implementación de código.
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Arquitectura:
+- El proyecto está dividido en módulos, cada módulo tiene su propio enrutamiento y componentes.
